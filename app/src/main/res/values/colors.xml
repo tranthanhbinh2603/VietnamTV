@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background_dark">#0F0F12</color>
+    <color name="surface_dark">#1E1E24</color>
+    <color name="surface_card">#2A2A32</color>
+    <color name="surface_card_selected">#3A1A22</color>
+    <color name="accent_red">#E50914</color>
+    <color name="accent_red_light">#FF2A38</color>
+    <color name="live_green">#00E676</color>
+    <color name="dead_red">#FF3D00</color>
+    <color name="checking_gray">#9E9E9E</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0B8</color>
+    <color name="overlay_scrim">#B3000000</color>
+    <color name="border_selected">#FF1744</color>
+</resources>

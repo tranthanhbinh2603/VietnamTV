@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Vietnam TV</string>
+    <string name="channel_list_title">Danh sách kênh VTV &amp; HTV</string>
+    <string name="swipe_up_hint">▲ Vuốt lên để xem danh sách kênh</string>
+    <string name="status_live">Trực tiếp</string>
+    <string name="status_dead">Mất tín hiệu</string>
+    <string name="status_checking">Đang kiểm tra…</string>
+    <string name="loading_channel">Đang tải %1$s…</string>
+    <string name="channel_dead_fallback">Kênh %1$s mất tín hiệu, đang chuyển kênh tiếp theo…</string>
+    <string name="channel_playing">Đang phát: %1$s</string>
+    <string name="app_notification_channel_name">TV Live Service</string>
+    <string name="app_notification_channel_desc">Phát âm thanh TV khi chạy nền</string>
+</resources>
