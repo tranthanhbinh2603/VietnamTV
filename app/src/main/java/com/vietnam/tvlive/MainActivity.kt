@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         enableImmersiveMode()
-        requestNotificationPermission()
 
         initViews()
         loadDynamicChannels()
@@ -103,18 +102,6 @@ class MainActivity : AppCompatActivity() {
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    101
-                )
-            }
-        }
-    }
 
     private fun initViews() {
         // Horizontal channel selector bar (Hidden by default on startup!)

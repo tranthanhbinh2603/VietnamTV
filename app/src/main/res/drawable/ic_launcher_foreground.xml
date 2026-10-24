@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Antennas -->
+    <!-- Left antenna -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M 54,35 L 36,19" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 36,19 m -2.5,0 a 2.5,2.5 0 1,0 5,0 a 2.5,2.5 0 1,0 -5,0" />
+
+    <!-- Right antenna -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M 54,35 L 72,19" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 72,19 m -2.5,0 a 2.5,2.5 0 1,0 5,0 a 2.5,2.5 0 1,0 -5,0" />
+
+    <!-- TV Stand Legs -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M 35,76 L 28,86" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M 73,76 L 80,86" />
+
+    <!-- TV Body Cabinet -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 29,35 H 79 A 5,5 0 0 1 84,40 V 71 A 5,5 0 0 1 79,76 H 29 A 5,5 0 0 1 24,71 V 40 A 5,5 0 0 1 29,35 Z" />
+
+    <!-- TV Screen (Dark inset) -->
+    <path
+        android:fillColor="#181820"
+        android:pathData="M 31,40 H 68 A 3,3 0 0 1 71,43 V 68 A 3,3 0 0 1 68,71 H 31 A 3,3 0 0 1 28,68 V 43 A 3,3 0 0 1 31,40 Z" />
+
+    <!-- Play Icon on TV Screen -->
+    <path
+        android:fillColor="#E50914"
+        android:pathData="M 46,49 L 57,55.5 L 46,62 Z" />
+
+    <!-- TV Control Panel: Dials & Buttons -->
+    <path
+        android:fillColor="#181820"
+        android:pathData="M 77,47 m -2.2,0 a 2.2,2.2 0 1,0 4.4,0 a 2.2,2.2 0 1,0 -4.4,0" />
+    <path
+        android:fillColor="#181820"
+        android:pathData="M 77,55 m -2.2,0 a 2.2,2.2 0 1,0 4.4,0 a 2.2,2.2 0 1,0 -4.4,0" />
+
+    <!-- Speaker Slits -->
+    <path
+        android:strokeColor="#181820"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M 74.5,63 H 79.5" />
+    <path
+        android:strokeColor="#181820"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M 74.5,67 H 79.5" />
+
+</vector>
