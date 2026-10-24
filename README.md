@@ -1,4 +1,4 @@
-# Vietnam TV - Ứng dụng xem truyền hình VTV & HTV trực tiếp
+# Vietnam TV - Ứng dụng xem truyền hình trực tiếp từ nguồn cố định
 
 ## 🚀 Hướng dẫn tự Build file APK
 
