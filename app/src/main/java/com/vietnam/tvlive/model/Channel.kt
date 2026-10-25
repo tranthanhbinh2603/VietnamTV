@@ -20,4 +20,10 @@ data class Channel(
 
     val isHtv: Boolean
         get() = group.equals("HTV", ignoreCase = true) || name.uppercase().startsWith("HTV")
+
+    val isDongNai: Boolean
+        get() = group.equals("Đồng Nai", ignoreCase = true) || name.contains("Đồng Nai", ignoreCase = true) || name.contains("Dong Nai", ignoreCase = true)
+
+    val isVinhLong: Boolean
+        get() = group.equals("Vĩnh Long", ignoreCase = true) || name.contains("Vĩnh Long", ignoreCase = true) || name.contains("Vinh Long", ignoreCase = true) || name.contains("THVL", ignoreCase = true)
 }

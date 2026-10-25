@@ -77,7 +77,9 @@ object M3uParser {
      * Parses arbitrary M3U content dynamically:
      * - VTV: all channels
      * - HTV: only channels 1 -> 9
-     * - Priorities: VTV1, HTV7, HTV9 at the head of the list; remaining channels ordered normally.
+     * - Đồng Nai: all channels
+     * - Vĩnh Long: all channels
+     * - Ordering: VTV1, HTV9, HTV7, Đồng Nai stations, Vĩnh Long stations, remaining channels ordered normally.
      */
     fun parseM3uContent(content: String): List<Channel> {
         val lines = content.lines()
@@ -94,7 +96,7 @@ object M3uParser {
             if (trimmed.startsWith("#EXTINF:")) {
                 currentExtInf = trimmed
             } else if (trimmed.isNotEmpty() && !trimmed.startsWith("#") && currentExtInf != null) {
-                val streamUrl = trimmed
+                var streamUrl = trimmed
                 val extInf = currentExtInf
 
                 val titleMatcher = titlePattern.matcher(extInf)
@@ -109,16 +111,42 @@ object M3uParser {
                 val idMatcher = idPattern.matcher(extInf)
                 val id = if (idMatcher.find()) idMatcher.group(1)?.trim().orEmpty() else ""
 
+                val upperTitle = title.uppercase()
+                val upperGroup = group.uppercase()
+                val lowerId = id.lowercase()
+
                 // Filter logic:
                 // 1. VTV: all channels
-                val isVtv = group.equals("VTV", ignoreCase = true) || title.uppercase().startsWith("VTV")
+                val isVtv = upperGroup == "VTV" || upperTitle.startsWith("VTV")
 
-                // 2. HTV: only channels 1 -> 9
-                val isHtvNumbered = (group.equals("HTV", ignoreCase = true) || title.uppercase().startsWith("HTV"))
+                // 2. HTV: numbered channels 1 -> 9
+                val isHtvNumbered = (upperGroup == "HTV" || upperTitle.startsWith("HTV"))
                         && HTV_NUMBERED_REGEX.containsMatchIn(title)
 
-                if (isVtv || isHtvNumbered) {
-                    val assignedGroup = if (isVtv) "VTV" else "HTV"
+                // 3. Dong Nai stations
+                val isDongNai = title.contains("Đồng Nai", ignoreCase = true)
+                        || title.contains("Dong Nai", ignoreCase = true)
+                        || lowerId.contains("dongnai")
+                        || group.contains("Đồng Nai", ignoreCase = true)
+                        || group.contains("Dong Nai", ignoreCase = true)
+
+                // 4. Vinh Long stations
+                val isVinhLong = title.contains("Vĩnh Long", ignoreCase = true)
+                        || title.contains("Vinh Long", ignoreCase = true)
+                        || upperTitle.startsWith("THVL")
+                        || lowerId.contains("vinhlong")
+                        || lowerId.contains("thvl")
+                        || group.contains("Vĩnh Long", ignoreCase = true)
+                        || group.contains("Vinh Long", ignoreCase = true)
+
+                if (isVtv || isHtvNumbered || isDongNai || isVinhLong) {
+                    val assignedGroup = when {
+                        isVtv -> "VTV"
+                        isHtvNumbered -> "HTV"
+                        isDongNai -> "Đồng Nai"
+                        else -> "Vĩnh Long"
+                    }
+
                     result.add(
                         Channel(
                             id = id.ifEmpty { title },
@@ -134,23 +162,48 @@ object M3uParser {
             }
         }
 
-        // Priority ordering: VTV1, HTV9, HTV7 at the head of the list
-        val priorityTargets = listOf("VTV1", "HTV9", "HTV7")
-        val prioritized = mutableListOf<Channel>()
-
-        for (target in priorityTargets) {
-            val index = result.indexOfFirst {
-                val t = it.name.trim()
-                t.equals(target, ignoreCase = true) ||
-                t.startsWith("$target ", ignoreCase = true) ||
-                t.startsWith("$target-", ignoreCase = true)
-            }
-            if (index >= 0) {
-                prioritized.add(result.removeAt(index))
-            }
+        // Priority ordering: VTV1, HTV9, HTV7, Đồng Nai, Vĩnh Long, then remaining
+        fun matchesTarget(channel: Channel, target: String): Boolean {
+            val t = channel.name.trim()
+            return t.equals(target, ignoreCase = true) ||
+                    t.startsWith("$target ", ignoreCase = true) ||
+                    t.startsWith("$target-", ignoreCase = true) ||
+                    t.startsWith("${target}HD", ignoreCase = true)
         }
 
-        // Prepend prioritized channels at the beginning
+        val prioritized = mutableListOf<Channel>()
+
+        // 1. VTV1
+        val vtv1Index = result.indexOfFirst { matchesTarget(it, "VTV1") }
+        if (vtv1Index >= 0) {
+            prioritized.add(result.removeAt(vtv1Index))
+        }
+
+        // 2. HTV9
+        val htv9Index = result.indexOfFirst { matchesTarget(it, "HTV9") }
+        if (htv9Index >= 0) {
+            prioritized.add(result.removeAt(htv9Index))
+        }
+
+        // 3. HTV7
+        val htv7Index = result.indexOfFirst { matchesTarget(it, "HTV7") }
+        if (htv7Index >= 0) {
+            prioritized.add(result.removeAt(htv7Index))
+        }
+
+        // 4. Các đài Đồng Nai (sorted by name: Đồng Nai 1, Đồng Nai 2...)
+        val dongNaiChannels = result.filter { it.isDongNai }
+            .sortedWith(compareBy { it.name })
+        result.removeAll { it.isDongNai }
+        prioritized.addAll(dongNaiChannels)
+
+        // 5. Các đài Vĩnh Long (sorted by name: Vĩnh Long 1, Vĩnh Long 2...)
+        val vinhLongChannels = result.filter { it.isVinhLong }
+            .sortedWith(compareBy { it.name })
+        result.removeAll { it.isVinhLong }
+        prioritized.addAll(vinhLongChannels)
+
+        // Prepend prioritized channels at the beginning; remaining channels remain in original order
         result.addAll(0, prioritized)
 
         return result

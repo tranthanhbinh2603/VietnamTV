@@ -4,6 +4,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
     android:background="@color/black">
 
     <!-- Fullscreen Video Player -->
@@ -11,6 +12,7 @@
         android:id="@+id/playerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:keepScreenOn="true"
         app:use_controller="false"
         app:surface_type="surface_view"
         app:resize_mode="fit" />
@@ -54,6 +56,20 @@
         android:paddingVertical="8dp"
         android:textColor="@color/white"
         android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- Center Play/Pause Button (Shown when user taps screen along with channel bar) -->
+    <ImageButton
+        android:id="@+id/btnPlayPause"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_play_pause_button"
+        android:contentDescription="Tạm dừng / Phát video"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_pause"
+        app:tint="@color/white"
         android:visibility="gone" />
 
     <!-- Bottom Channel Selection Bar (Hidden by default, shown ONLY on Swipe Up / Tap) -->

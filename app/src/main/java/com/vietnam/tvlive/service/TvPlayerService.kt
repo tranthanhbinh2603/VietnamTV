@@ -52,7 +52,7 @@ class TvPlayerService : Service() {
         const val NOTIFICATION_ID = 1001
         const val ACTION_PLAY_PAUSE = "com.vietnam.tvlive.ACTION_PLAY_PAUSE"
         const val ACTION_STOP = "com.vietnam.tvlive.ACTION_STOP"
-        private const val CONNECTION_TIMEOUT_MS = 8000L
+        private const val CONNECTION_TIMEOUT_MS = 12000L
     }
 
     inner class LocalBinder : Binder() {
@@ -102,7 +102,7 @@ class TvPlayerService : Service() {
                         updateNotification(ch, isPlaying = true)
                         onPlaybackReady?.invoke(ch)
                     }
-                    onStateChanged?.invoke(true)
+                    onStateChanged?.invoke(player?.isPlaying == true)
                 }
                 Player.STATE_BUFFERING -> {
                     onStateChanged?.invoke(false)
